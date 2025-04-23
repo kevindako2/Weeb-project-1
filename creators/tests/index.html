@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation des Scripts Bash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="container">
+        <h1 class="title">Documentation des Scripts Bash</h1>
+        <p class="description">Cette page fournit des scripts Bash utiles et leur documentation.</p>
+        
+        <!-- Section pour un script -->
+        <div class="script-section">
+            <h2 class="script-title">Script de recherche de fonctions en C</h2>
+            <p class="script-description">Ce script permet de rechercher dans un répertoire tous les fichiers C contenant des appels de fonctions, en excluant certaines fonctions spécifiques.</p>
+            <h3 class="subtitle">Utilisation :</h3>
+            <pre class="code-block"><code>./script.sh [répertoire]</code></pre>
+            <h3 class="subtitle">Code source :</h3>
+            <div class="code-container">
+                <button class="copy-button" onclick="copyToClipboard('script1')">Copier</button>
+                <pre id="script1" class="code-block"><code># Répertoire cible (par défaut le répertoire courant, mais peut être passé en argument)
+dir=${1:-.}
+
+# Liste des fonctions à exclure
+EXCLUDED_FUNCS="write|malloc|free|my_[a-zA-Z0-9_]+"
+
+# Recherche des appels de fonctions
+find "$dir" -type f -name "*.c" | while read -r file; do
+    grep -nE "\b[a-zA-Z_][a-zA-Z0-9_]*\s*\(" "$file" | \
+    grep -Ev "\b($EXCLUDED_FUNCS)\s*\(" | \
+    while IFS=: read -r line_number line_content; do
+        echo "Fichier: $file - Ligne: $line_number - Contenu: $line_content"
+    done
+done</code></pre>
+            </div>
+        </div>
+        
+        <!-- ESPACE POUR AJOUTER D'AUTRES SCRIPTS -->
+        <div class="script-section">
+            <h2 class="script-title">Nom du Nouveau Script</h2>
+            <p class="script-description">Description du nouveau script...</p>
+            <h3 class="subtitle">Utilisation :</h3>
+            <pre class="code-block"><code>./nouveau_script.sh [options]</code></pre>
+            <h3 class="subtitle">Code source :</h3>
+            <div class="code-container">
+                <button class="copy-button" onclick="copyToClipboard('script2')">Copier</button>
+                <pre id="script2" class="code-block"><code># Ajouter ici le code du nouveau script</code></pre>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        function copyToClipboard(id) {
+            var copyText = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(copyText).then(() => {
+                alert("Script copié dans le presse-papiers !");
+            }).catch(err => {
+                console.error("Erreur de copie :", err);
+            });
+        }
+    </script>
+</body>
+</html>
